@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/combatdummy/static/js/main.b2ca0096.js",
+    "index.html": "/combatdummy/index.html",
+    "main.b2ca0096.js.map": "/combatdummy/static/js/main.b2ca0096.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.b2ca0096.js"
+  ]
+}
