@@ -66,7 +66,7 @@ const EnemyAfflictionTracker = () => {
     focus: 0,
     tree: 0
   });
-  const [combatTime, setCombatTime] = useState(1);
+  const [combatTime, setCombatTime] = useState(1.0);
   const [cureLog, setCureLog] = useState([]);
 
   useEffect(() => {
@@ -166,14 +166,14 @@ const EnemyAfflictionTracker = () => {
     let currentAfflictions = [...afflictions];
     let currentBalances = {...cureBalances};
     let newLogEntries = [];
-
-    for (let i = 0; i < combatTime; i++) {
-      const result = processCombatSecond(i + 1);
+  
+    for (let i = 0; i < combatTime * 10; i++) {
+      const result = processCombatSecond((i + 1) / 10);
       currentAfflictions = result.afflictions;
       currentBalances = result.balances;
       newLogEntries = [...newLogEntries, ...result.logEntries];
     }
-
+  
     setAfflictions(currentAfflictions);
     setCureBalances(currentBalances);
     setCureLog(prevLog => [...newLogEntries, ...prevLog]);
@@ -224,9 +224,14 @@ const EnemyAfflictionTracker = () => {
         <input 
           id="combatTime"
           type="number" 
-          value={combatTime} 
-          onChange={(e) => setCombatTime(Math.max(1, parseInt(e.target.value) || 1))}
-          style={{ width: '60px' }}
+          value={combatTime}
+          onChange={(e) => {
+            const value = parseFloat(e.target.value);
+            setCombatTime(Math.max(0.1, isNaN(value) ? 0.1 : Number(value.toFixed(1))));
+          }}
+          step="0.1"
+          min="0.1"
+          style={{ width: '80px' }}
         />
       </div>
 
